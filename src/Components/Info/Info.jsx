@@ -13,6 +13,10 @@ const getFormattedTime = () => {
 export default function Info({ weatherData, icon }) {
 	const [time, setTime] = useState(getFormattedTime())
 
+	if (icon) {
+		console.log(icon)
+	}
+
 	useEffect(() => {
 		if (!icon || !weatherData) {
 			return
@@ -37,15 +41,13 @@ export default function Info({ weatherData, icon }) {
 	return (
 		<div className={s.info}>
 			<div className={s.header}>
-				<h1 className={s.title}>
-					{Math.floor(weatherData.list[0].main.temp) + '°C'}
-				</h1>
+				<h1 className={s.title}>{Math.floor(weatherData.main.temp) + '°C'}</h1>
 			</div>
 			<div className={s.footer}>
 				<p className={s.subtitle}>Today</p>
 				<p className={s.time}>{`${time.hours}:${time.minutes}`}</p>
 				<p className={s.city}>
-					{weatherData.city.name}, {weatherData.city.country}
+					{weatherData.name}, {weatherData.sys.country}
 				</p>
 			</div>
 		</div>

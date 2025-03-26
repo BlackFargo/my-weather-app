@@ -21,10 +21,13 @@ export default function Header({ updateWeatherData }) {
 
 	const fetchWeather = useCallback(async city => {
 		try {
-			const data = await getWeather(city)
-			if (data) {
-				setWeatherData(data)
-				updateWeatherData(data)
+			const [weather, currentWeather] = await Promise.all([
+				getWeather(city),
+				getCurrentWeather(city),
+			])
+			if (weather && currentWeather) {
+				setWeatherData({ weather, currentWeather })
+				updateWeatherData({ weather, currentWeather })
 			}
 		} catch (e) {
 			setError('The city was not found')
@@ -44,6 +47,8 @@ export default function Header({ updateWeatherData }) {
 		if (inpValue.trim()) {
 			fetchWeather(inpValue)
 			setInpValue('')
+		} else {
+			setError('Please enter a city name')
 		}
 	}
 
@@ -53,6 +58,10 @@ export default function Header({ updateWeatherData }) {
 		return () => clearInterval(interval)
 	}, [fetchWeather])
 
+	if (error) {
+		return <div>{error}</div> // Отображение ошибки
+	}
+
 	if (!weatherData) {
 		return <div>Loading...</div>
 	}
@@ -61,7 +70,8 @@ export default function Header({ updateWeatherData }) {
 		<header className={s.header}>
 			<div className='location'>
 				<p className={s.city}>
-					{weatherData.city.name}, {weatherData.city.country}
+					{weatherData.currentWeather.name},{' '}
+					{weatherData.currentWeather.sys.country}
 				</p>
 			</div>
 			<div className='search'>
@@ -91,6 +101,7 @@ export default function Header({ updateWeatherData }) {
 					</button>
 				</form>
 			</div>
+
 			<div className={s.notification}>
 				<svg
 					width={50}
@@ -98,13 +109,13 @@ export default function Header({ updateWeatherData }) {
 					xmlns='http://www.w3.org/2000/svg'
 					fill='none'
 					viewBox='0 0 24 24'
-					stroke-width='1.5'
+					strokeWidth='1.5'
 					stroke='currentColor'
-					class='size-6'
+					className='size-6'
 				>
 					<path
-						stroke-linecap='round'
-						stroke-linejoin='round'
+						strokeLinecap='round'
+						strokeLinejoin='round'
 						d='m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z'
 					/>
 				</svg>

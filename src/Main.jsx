@@ -22,18 +22,26 @@ export default function Main() {
 		<CityProvider>
 			<div className='wrapper container'>
 				<Aside
-					icon={weatherData ? weatherData.list[0].weather[0].icon : null}
+					icon={
+						weatherData ? weatherData.weather.list[0].weather[0].icon : null
+					}
 				/>
 
 				<main className='main'>
 					<Header updateWeatherData={updateWeatherData} />
 					<Info
-						weatherData={weatherData ? weatherData : null}
-						icon={weatherData ? weatherData.list[0].weather[0].icon : null}
+						weatherData={weatherData ? weatherData.currentWeather : null}
+						icon={
+							weatherData ? weatherData.currentWeather.weather[0].icon : null
+						}
 					/>
-					<HourlyForecast weatherData={weatherData} />
-					<DailyForecast weatherData={weatherData} />
-					<Cities weatherData={weatherData} />
+					<HourlyForecast
+						weatherData={weatherData ? weatherData.weather : null}
+					/>
+					<DailyForecast
+						weatherData={weatherData ? weatherData.weather : null}
+					/>
+					<Cities weatherData={weatherData ? weatherData.weather : null} />
 				</main>
 			</div>
 		</CityProvider>
