@@ -11,7 +11,7 @@ const getFormattedTime = () => {
 		minutes: date.getMinutes().toString().padStart(2, '0'),
 	}
 }
-
+//123
 export default function Header({ updateWeatherData }) {
 	const { selectedCity } = useCity()
 	const [time, setTime] = useState(getFormattedTime())
