@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+html, body {
+	height: 100%;
+	font-family: "Montserrat", sans-serif;
+}
+
+body {
+	background-color: var(--body-background-light);
+}
+
+#root {
+	padding-top: 50px;
+}
+
+.container {
+		max-width: 1240px;
+		padding: 0 20px;
+		margin: 0 auto;
+		display: flex;
+}
+
+.main {
+	display: grid;
+	grid-template-areas: 
+	'header header'
+	'info cities'
+	'hourly hourly'
+	'daily daily';
+	max-width: 900px;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 15px;
+	row-gap: 20px;
+	margin-left: 40px;
+}
+

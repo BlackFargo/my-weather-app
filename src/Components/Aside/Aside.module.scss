@@ -1,0 +1,41 @@
+@import '../../Styles/mixins';
+@import '../../Styles/variables';
+
+.aside {
+	max-width: 300px;
+	width: 100%;
+	height: 800px;
+	background-color: rgba(255, 255, 255, 0.2);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	border-radius: var(--border-radius);
+	padding: 20px;
+	box-shadow: var(--box-shadow);
+}
+
+.header {
+	display: flex;
+	justify-content: center;
+}
+.icon {
+	width: 200px;
+	height: 200px;
+	margin-bottom: -100px;
+}
+
+.list {
+	
+	&_item {
+		font-size: 20px;
+		font-weight: 500;
+		padding: 15px;
+		opacity: 0.9;
+	}
+}
+
+.footer {
+	font-size: 20px;
+	font-weight: 500;
+	opacity: 0.9;
+}

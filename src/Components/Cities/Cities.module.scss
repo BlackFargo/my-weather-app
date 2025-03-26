@@ -1,0 +1,41 @@
+// @import url('../../Styles/_mixins.scss');
+@import url('../../Styles/_variables.scss');
+
+.cities {
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 18px;
+	padding: 20px;
+	box-shadow: var(--box-shadow);
+	grid-area: cities;
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+	height: 300px;
+}
+
+.actions {
+	display: flex;
+	justify-content: space-between;
+	column-gap: 2px;
+}
+
+.btn {
+	width: 50%;
+	padding: 5px;
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--primary-color);
+	font-size: 16px;
+	font-weight: 600;
+	font-style: italic;
+	border: none;
+	color: white;
+	transition: all 0.3s;
+
+	&:hover {
+		opacity: 0.9;
+	}
+}

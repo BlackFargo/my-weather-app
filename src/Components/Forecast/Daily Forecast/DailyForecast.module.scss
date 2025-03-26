@@ -1,0 +1,12 @@
+@import '../../../Styles/variables';
+
+.globals {
+	height: 225px;
+	padding: 20px;
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	display: flex;
+	column-gap: 10px;
+	grid-area: daily;
+	overflow: hidden	;
+}

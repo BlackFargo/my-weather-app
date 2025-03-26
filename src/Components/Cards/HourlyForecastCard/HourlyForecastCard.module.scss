@@ -1,0 +1,31 @@
+@import '../../../Styles/variables';
+
+.hourlyForecastCard {
+	min-width: 90px;
+	height: 100%;
+	padding: 5px;
+	background-color: var(--card-background-light);
+	border-radius: 10px;
+}
+
+.list {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.time {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.img {
+	width: 50px;
+	height: 50px;
+}
+
+.temp {
+	font-size: 18px;
+	font-weight: 500;
+}

@@ -1,0 +1,15 @@
+.hourlyForecast {
+	height: 115px;
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	padding: 10px;
+	grid-area: hourly;
+}
+
+.slider {
+	display: flex;
+	column-gap: 10px;
+	overflow-x: auto;
+	padding-bottom: 5px;
+	scroll-snap-type: x mandatory;
+}
