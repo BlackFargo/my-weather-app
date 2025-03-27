@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import s from './Aside.module.scss'
 
 const weatherIcons = {
@@ -40,11 +41,12 @@ export default function Aside({ icon }) {
 			</div>
 			<div className={s.main}>
 				<ul className={s.list}>
-					<li className={s.list_item}>Home</li>
-					<li className={s.list_item}>Blogs</li>
-					<li className={s.list_item}>Map</li>
-					<li className={s.list_item}>Photos</li>
-					<li className={s.list_item}>Videos</li>
+					<li className={s.list_item}>
+						<Link to='/'>Home</Link>
+					</li>
+					<li className={s.list_item}>
+						<Link to='/weatherMap'>Map</Link>
+					</li>
 				</ul>
 			</div>
 			<div className={s.footer}>
