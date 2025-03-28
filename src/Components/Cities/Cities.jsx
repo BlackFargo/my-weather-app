@@ -29,7 +29,7 @@ const capitals = [
 ]
 
 export default function Cities() {
-	const { selectedCity, setSelectedCity } = useCity()
+	const { setSelectedCity } = useCity()
 	const lastPage = Math.ceil(capitals.length / 3) - 1
 	let [page, setPage] = useState(0)
 

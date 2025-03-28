@@ -45,7 +45,7 @@ export default function Aside({ icon }) {
 						<Link to='/'>Home</Link>
 					</li>
 					<li className={s.list_item}>
-						<Link to='/weatherMap'>Map</Link>
+						<Link to='/weather-map'>Map</Link>
 					</li>
 				</ul>
 			</div>

@@ -30,7 +30,7 @@ export default function Header({ updateWeatherData }) {
 				updateWeatherData({ weather, currentWeather })
 			}
 		} catch (e) {
-			setError('The city was not found')
+			setError('City was not found')
 			console.error('Failed to fetch weather:', e)
 		}
 	}, [])
@@ -47,8 +47,10 @@ export default function Header({ updateWeatherData }) {
 		if (inpValue.trim()) {
 			fetchWeather(inpValue)
 			setInpValue('')
-		} else {
-			setError('Please enter a city name')
+			setError(null)
+		}
+		if (inpValue.trim().length == 0) {
+			return
 		}
 	}
 
@@ -57,10 +59,6 @@ export default function Header({ updateWeatherData }) {
 		const interval = setInterval(() => setTime(getFormattedTime()), 60000)
 		return () => clearInterval(interval)
 	}, [fetchWeather])
-
-	if (error) {
-		return <div>{error}</div> // Отображение ошибки
-	}
 
 	if (!weatherData) {
 		return <div>Loading...</div>
@@ -101,6 +99,7 @@ export default function Header({ updateWeatherData }) {
 					</button>
 				</form>
 			</div>
+			{error ? error : null}
 
 			<div className={s.notification}>
 				<svg

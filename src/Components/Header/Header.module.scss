@@ -28,7 +28,7 @@
 	height: 50px;
 	font-size: 20px;
 	padding: 10px 20px;
-	min-width: 400px;
+	min-width: 350px;
 	background: var(--primary-color);
 	transition: all 0.3s ease;
 	border-radius: var(--border-radius);
@@ -73,7 +73,6 @@
 	cursor: pointer;
 
 	svg:hover {
-		color: aquamarine;
 		transition: all 0.3s;
 	}
 }

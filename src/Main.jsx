@@ -8,6 +8,7 @@ import Cities from './Components/Cities/Cities'
 import HourlyForecast from './Components/Forecast/Hourly Forecast/HourlyForecast'
 import { CityProvider } from './Context/CityContext'
 import WeatherMap from './Components/Map/WeatherMap'
+import Layout from './Components/Layout'
 
 export default function Main() {
 	const [weatherData, setWeatherData] = useState(null)
@@ -24,33 +25,50 @@ export default function Main() {
 		<BrowserRouter>
 			<CityProvider>
 				<div className='wrapper container'>
-					<Aside
-						icon={
-							weatherData ? weatherData.weather.list[0].weather[0].icon : null
-						}
-					/>
-
-					<main className='main'>
-						<Header updateWeatherData={updateWeatherData} />
-						<Info
-							weatherData={weatherData ? weatherData.currentWeather : null}
-							icon={
-								weatherData ? weatherData.currentWeather.weather[0].icon : null
+					<Routes>
+						<Route
+							path='/'
+							element={
+								<Layout
+									icon={
+										weatherData
+											? weatherData.weather.list[0].weather[0].icon
+											: null
+									}
+								/>
 							}
-						/>
-						<HourlyForecast
-							weatherData={weatherData ? weatherData.weather : null}
-						/>
-						<DailyForecast
-							weatherData={weatherData ? weatherData.weather : null}
-						/>
-						<Cities weatherData={weatherData ? weatherData.weather : null} />
-					</main>
+						>
+							<Route
+								index
+								element={
+									<>
+										<Header updateWeatherData={updateWeatherData} />
+										<Info
+											weatherData={
+												weatherData ? weatherData.currentWeather : null
+											}
+											icon={
+												weatherData
+													? weatherData.currentWeather.weather[0].icon
+													: null
+											}
+										/>
+										<HourlyForecast
+											weatherData={weatherData ? weatherData.weather : null}
+										/>
+										<DailyForecast
+											weatherData={weatherData ? weatherData.weather : null}
+										/>
+										<Cities
+											weatherData={weatherData ? weatherData.weather : null}
+										/>
+									</>
+								}
+							/>
+							<Route path='weather-map' element={<WeatherMap />} />
+						</Route>
+					</Routes>
 				</div>
-				<Routes>
-					{/* <Route path='/' element={} /> */}
-					<Route path='/weatherMap' element={<WeatherMap />} />
-				</Routes>
 			</CityProvider>
 		</BrowserRouter>
 	)
