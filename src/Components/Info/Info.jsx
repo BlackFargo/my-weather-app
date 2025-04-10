@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import s from './Info.module.scss'
+import Loading from '../Loading/Loading'
 // import { GlobalSvgSelector } from '../../assets/icons/Global/GlobalSvgSelector.'
 
 const getFormattedTime = () => {
@@ -10,12 +11,17 @@ const getFormattedTime = () => {
 	}
 }
 
-export default function Info({ weatherData, icon }) {
+export default function Info({ weatherData, icon, delay }) {
 	const [time, setTime] = useState(getFormattedTime())
 
-	if (icon) {
-		console.log(icon)
-	}
+	const [show, setShow] = useState(false)
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setShow(true)
+		}, delay)
+		return () => clearTimeout(timer)
+	})
 
 	useEffect(() => {
 		if (!icon || !weatherData) {
@@ -27,19 +33,18 @@ export default function Info({ weatherData, icon }) {
 		}, 60000)
 
 		return () => clearInterval(interval)
-		компонента
 	}, [icon, weatherData])
 
 	if (!icon) {
-		return <div>Loading...</div>
+		return <Loading />
 	}
 
 	if (!weatherData) {
-		return <p>Loading weather data...</p>
+		return <Loading />
 	}
 
 	return (
-		<div className={s.info}>
+		<div className={`${s.info} ${show ? s.show : ''}`}>
 			<div className={s.header}>
 				<h1 className={s.title}>{Math.floor(weatherData.main.temp) + '°C'}</h1>
 			</div>

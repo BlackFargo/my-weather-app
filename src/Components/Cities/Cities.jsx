@@ -3,6 +3,7 @@ import s from './Cities.module.scss'
 import CityCard from '../Cards/CityCard/CityCard'
 import { getCurrentWeather } from '../../Services/WeatherService'
 import { useCity } from '../../Context/CityContext'
+import Loading from '../Loading/Loading'
 
 const capitals = [
 	{ name: 'Washington, D.C.' },
@@ -28,10 +29,11 @@ const capitals = [
 	{ name: 'Buenos Aires' },
 ]
 
-export default function Cities() {
+export default function Cities({ delay }) {
 	const { setSelectedCity } = useCity()
 	const lastPage = Math.ceil(capitals.length / 3) - 1
 	let [page, setPage] = useState(0)
+	const [show, setShow] = useState(false)
 
 	const [city, setCity] = useState('')
 
@@ -40,13 +42,19 @@ export default function Cities() {
 	}
 
 	useEffect(() => {
+		const timer = setTimeout(() => {
+			setShow(true)
+		}, delay)
+
+		return () => clearTimeout(timer)
+	}, [])
+
+	useEffect(() => {
 		setSelectedCity(city)
 	}, [city])
 
 	const newCapitals = capitals.slice(page * 3, page * 3 + 3)
-	useEffect(() => {
-		console.log(page)
-	}, [page])
+	useEffect(() => {}, [page])
 	const [cities, setCities] = useState(null)
 
 	useEffect(() => {
@@ -78,14 +86,10 @@ export default function Cities() {
 		fetchData()
 	}, [page])
 
-	useEffect(() => {
-		console.log(cities)
-	}, [cities])
-
-	if (!cities) return <p>Loading...</p>
+	if (!cities) return <Loading />
 
 	return (
-		<div className={s.cities}>
+		<div className={`${s.cities} ${show ? s.show : ''}`}>
 			{cities.map(city => {
 				return (
 					<CityCard

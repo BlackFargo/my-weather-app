@@ -3,6 +3,7 @@ import s from './Header.module.scss'
 import { getWeather } from '../../Services/WeatherService'
 import { useCity } from '../../Context/CityContext'
 import { getCurrentWeather } from '../../Services/WeatherService'
+import Loading from '../Loading/Loading'
 
 const getFormattedTime = () => {
 	const date = new Date()
@@ -12,12 +13,22 @@ const getFormattedTime = () => {
 	}
 }
 
-export default function Header({ updateWeatherData }) {
+export default function Header({ updateWeatherData, delay }) {
 	const { selectedCity } = useCity()
 	const [time, setTime] = useState(getFormattedTime())
 	const [inpValue, setInpValue] = useState('')
 	const [weatherData, setWeatherData] = useState(null)
 	const [error, setError] = useState('')
+
+	const [show, setShow] = useState(false)
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setShow(true)
+		}, delay)
+
+		return () => clearTimeout(timer)
+	}, [])
 
 	const fetchWeather = useCallback(async city => {
 		try {
@@ -61,11 +72,11 @@ export default function Header({ updateWeatherData }) {
 	}, [fetchWeather])
 
 	if (!weatherData) {
-		return <div>Loading...</div>
+		return <Loading />
 	}
 
 	return (
-		<header className={s.header}>
+		<header className={`${s.header} ${show ? s.show : ''}`}>
 			<div className='location'>
 				<p className={s.city}>
 					{weatherData.currentWeather.name},{' '}

@@ -1,10 +1,10 @@
-
-
-import React from 'react';
-import * as ReactDOMClient from 'react-dom/client'; 
+import React from 'react'
+import * as ReactDOMClient from 'react-dom/client'
 import './Styles/reset.css'
-import './styles.scss';
-import Main from './main';
+import './Styles/styles.scss'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-const root = ReactDOMClient.createRoot(document.getElementById('root'));
-root.render(<Main />); 
+import Main from './Main'
+
+const root = ReactDOMClient.createRoot(document.getElementById('root'))
+root.render(<Main />)

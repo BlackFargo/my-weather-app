@@ -1,6 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import s from './Aside.module.scss'
+import Loading from '../Loading/Loading'
 
 const weatherIcons = {
 	'01d': 'clear-day',
@@ -23,15 +24,51 @@ const weatherIcons = {
 	'50n': 'fog',
 }
 
+const setActive = ({ isActive }) => (isActive ? 'active-link' : '')
+
 export default function Aside({ icon }) {
+	const [showAside, setShowAside] = useState(false)
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setShowAside(true)
+		}, 200)
+
+		return () => clearTimeout(timer)
+	}, [])
+
+	const [theme, setTheme] = useState(false)
+
+	useEffect(() => {
+		const themeLocal = JSON.parse(localStorage.getItem('theme')) ?? false
+		setTheme(themeLocal)
+		const checkedTheme = JSON.parse(localStorage.getItem('checked')) ?? false
+	}, [])
+
+	useEffect(() => {
+		if (theme) {
+			document.body.classList.add('black-theme')
+			localStorage.setItem('theme', true)
+			localStorage.setItem('checked', true)
+		} else {
+			document.body.classList.remove('black-theme')
+			localStorage.setItem('theme', false)
+			localStorage.setItem('checked', false)
+		}
+	}, [theme])
+
 	if (!icon) {
-		return <div>Loading...</div>
+		return <Loading />
+	}
+
+	const switchTheme = () => {
+		setTheme(prev => !prev)
 	}
 
 	const weatherIcon = weatherIcons[icon]
 
 	return (
-		<aside className={s.aside}>
+		<aside className={`${s.aside} ${showAside ? s.show : ''}`}>
 			<div className={s.header}>
 				<img
 					className={s.icon}
@@ -42,15 +79,29 @@ export default function Aside({ icon }) {
 			<div className={s.main}>
 				<ul className={s.list}>
 					<li className={s.list_item}>
-						<Link to='/'>Home</Link>
+						<NavLink to='/' className={setActive}>
+							Home
+						</NavLink>
 					</li>
 					<li className={s.list_item}>
-						<Link to='/weather-map'>Map</Link>
+						<NavLink to='/weather-map' className={setActive}>
+							Map
+						</NavLink>
 					</li>
 				</ul>
 			</div>
 			<div className={s.footer}>
-				<p>Change theme</p>
+				<input
+					checked={theme}
+					type='checkbox'
+					className={s.theme_switcher}
+					id='switcher'
+				/>
+				<label
+					htmlFor='switcher'
+					className={s.switch_label}
+					onClick={switchTheme}
+				></label>
 			</div>
 		</aside>
 	)

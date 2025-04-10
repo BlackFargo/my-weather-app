@@ -1,9 +1,18 @@
 :root {
 	--primary-color: #4793ff;
-	--light-background: #fff;
+	--background-color: #fff;
 	--box-shadow: 4px 8px 30px -5px rgba(100, 100, 100, 0.4);
 
 	--border-radius: 20px;
-	--body-background-light: #fff;
-	--card-background-light: rgba(71, 147, 255, 0.2);
+
+	--text-color: black;
+	--components-background: #fff;
+	--card-background: rgba(71, 147, 255, 0.2);
+}
+
+body.black-theme {
+	--background-color: #0d1117;
+	--components-background: #4f4f4f;
+	--card-background: #2e3035;
+	--text-color: #fff;
 }

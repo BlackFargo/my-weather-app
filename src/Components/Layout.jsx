@@ -1,12 +1,14 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Aside from './Aside/Aside'
 
 export default function Layout({ icon }) {
+	const location = useLocation()
+	const isMapPage = location.pathname === '/weather-map'
 	return (
 		<div className='wrapper container'>
 			<Aside icon={icon} />
-			<main className='main'>
+			<main className={`main ${isMapPage ? 'map-page' : ''}`}>
 				<Outlet />
 			</main>
 		</div>
