@@ -36,6 +36,7 @@
 	flex-direction: column;
 	row-gap: 30px;
 	&_item {
+		transition: all 0.3s;
 		a {
 			color: var(--primary-color);
 			text-decoration: none;
@@ -43,9 +44,9 @@
 			padding: 15px;
 			transition: all 0.3s;
 			font-weight: 500;
-
-			@include hover {
-			}
+		}
+		@include hover {
+			transform: translateX(10px);
 		}
 	}
 }

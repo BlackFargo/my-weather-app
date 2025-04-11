@@ -1,5 +1,5 @@
 // @import url('../../Styles/_mixins.scss');
-@import url('../../Styles/_variables.scss');
+@import '../../../Styles/variables';
 
 .cities {
 	background-color: var(--components-background);
@@ -44,6 +44,6 @@
 	transition: all 0.3s;
 
 	&:hover {
-		opacity: 0.9;
+		background-color: rgba($color: #4793ff, $alpha: 0.7);
 	}
 }

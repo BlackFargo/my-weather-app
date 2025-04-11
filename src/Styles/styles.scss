@@ -1,28 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import './variables';
 @import './mixins';
-
-html,
-body {
-	height: 100%;
-	font-family: 'Montserrat', sans-serif;
-}
-
-body {
-	background-color: var(--background-color);
-	transition: background-color 0.3s;
-}
-
-#root {
-	padding-block: 50px;
-}
-
-.container {
-	max-width: 1240px;
-	padding: 0 20px;
-	margin: 0 auto;
-	display: flex;
-}
+@import './globals';
+@import './utils.scss';
 
 .main {
 	display: grid;
@@ -45,16 +25,4 @@ body {
 	grid-template-areas: 'map map';
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr;
-}
-
-.active-link {
-	color: orange !important;
-}
-.show {
-	opacity: 1;
-	transition: opacity 0.5s ease-in;
-}
-
-.show > * {
-	opacity: 0;
 }

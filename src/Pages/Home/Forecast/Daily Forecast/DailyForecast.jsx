@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './DailyForecast.module.scss'
-import ForecastCard from '../../Cards/DailyForecastCard/DailyForecastCard'
-import Loading from '../../Loading/Loading'
+import ForecastCard from './../../../../Components/Cards/DailyForecastCard/DailyForecastCard'
+import Loading from '../../../../Components/Loading/Loading'
 
 export default function DailyForecast({ weatherData }) {
 	if (!weatherData) return <Loading />

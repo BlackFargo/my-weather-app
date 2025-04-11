@@ -1,0 +1,18 @@
+.container {
+	max-width: 1240px;
+	padding: 0 20px;
+	margin: 0 auto;
+	display: flex;
+}
+
+.active-link {
+	color: rgba($color: #e3c634, $alpha: 0.9) !important;
+}
+.show {
+	opacity: 1;
+	transition: opacity 0.5s ease-in;
+}
+
+.show > * {
+	opacity: 0;
+}

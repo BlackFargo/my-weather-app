@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import s from './HourlyForecast.module.scss'
-import HourlyForecastCard from '../../Cards/HourlyForecastCard/HourlyForecastCard'
-import Loading from '../../Loading/Loading'
+import HourlyForecastCard from './../../../../Components/Cards/HourlyForecastCard/HourlyForecastCard'
+import Loading from '../../../../Components/Loading/Loading'
 
 export default function HourlyForecast({ weatherData, delay }) {
 	const [show, setShow] = useState(false)

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import s from './Info.module.scss'
-import Loading from '../Loading/Loading'
+import Loading from '../../../Components/Loading/Loading'
 // import { GlobalSvgSelector } from '../../assets/icons/Global/GlobalSvgSelector.'
 
 const getFormattedTime = () => {

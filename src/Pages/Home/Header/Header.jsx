@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import s from './Header.module.scss'
-import { getWeather } from '../../Services/WeatherService'
-import { useCity } from '../../Context/CityContext'
-import { getCurrentWeather } from '../../Services/WeatherService'
-import Loading from '../Loading/Loading'
+import { getWeather } from '../../../Services/WeatherService'
+import { useCity } from '../../../Context/CityContext'
+import { getCurrentWeather } from '../../../Services/WeatherService'
+import Loading from '../../../Components/Loading/Loading'
 
 const getFormattedTime = () => {
 	const date = new Date()
@@ -39,6 +39,10 @@ export default function Header({ updateWeatherData, delay }) {
 			if (weather && currentWeather) {
 				setWeatherData({ weather, currentWeather })
 				updateWeatherData({ weather, currentWeather })
+				sessionStorage.setItem(
+					'weather',
+					JSON.stringify({ weather, currentWeather })
+				)
 			}
 		} catch (e) {
 			setError('City was not found')
@@ -66,7 +70,18 @@ export default function Header({ updateWeatherData, delay }) {
 	}
 
 	useEffect(() => {
-		fetchWeather('Kiev')
+		try {
+			const storedWeather = JSON.parse(sessionStorage.getItem('weather'))
+
+			if (storedWeather?.currentWeather?.name) {
+				fetchWeather(storedWeather.currentWeather.name)
+			} else {
+				fetchWeather('Kiev')
+			}
+		} catch (e) {
+			console.log(e)
+		}
+
 		const interval = setInterval(() => setTime(getFormattedTime()), 60000)
 		return () => clearInterval(interval)
 	}, [fetchWeather])
