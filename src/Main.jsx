@@ -1,22 +1,76 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Aside from './Components/Aside/Aside'
-
+import { getWeather, getCurrentWeather } from './Services/WeatherService'
 import { CityProvider } from './Context/CityContext'
 import WeatherMap from './Pages/Map/Map/WeatherMap'
 import Layout from './Layout/Layout'
 import Home from './Pages/Home/Home'
 import Map from './Pages/Map/Map'
 
-// import AnimatedWrapper from './Components/AnimatedWrapper'
 const delay = 200
 
-export default function Main() {
-	const [weatherData, setWeatherData] = useState(null)
-
-	const updateWeatherData = data => {
-		setWeatherData(data)
+const getFormattedTime = () => {
+	const date = new Date()
+	return {
+		hours: date.getHours().toString().padStart(2, '0'),
+		minutes: date.getMinutes().toString().padStart(2, '0'),
 	}
+}
+
+export default function Main() {
+	const [time, setTime] = useState(getFormattedTime())
+	const [weatherData, setWeatherData] = useState(null)
+	const [searchCity, setSearchCity] = useState('')
+
+	const getCitySearch = data => {
+		setSearchCity(data)
+	}
+
+	const fetchWeather = useCallback(async city => {
+		try {
+			const [weather, currentWeather] = await Promise.all([
+				getWeather(city),
+				getCurrentWeather(city),
+			])
+			if (weather && currentWeather) {
+				setWeatherData({ weather, currentWeather })
+
+				sessionStorage.setItem(
+					'weather',
+					JSON.stringify({ weather, currentWeather })
+				)
+			}
+		} catch (e) {
+			setError('City was not found')
+			console.error('Failed to fetch weather:', e)
+		}
+	}, [])
+
+	useEffect(() => {
+		try {
+			const storedWeather = JSON.parse(sessionStorage.getItem('weather'))
+
+			if (storedWeather?.currentWeather?.name) {
+				fetchWeather(storedWeather.currentWeather.name)
+			} else {
+				fetchWeather('Kiev')
+			}
+		} catch (e) {
+			console.log(e)
+		}
+
+		const interval = setInterval(() => setTime(getFormattedTime()), 60000)
+		return () => clearInterval(interval)
+	}, [fetchWeather])
+
+	useEffect(() => {
+		fetchWeather(searchCity)
+	}, [searchCity])
+
+	useEffect(() => {
+		console.log(weatherData)
+	}, [weatherData])
 
 	return (
 		<BrowserRouter>
@@ -41,7 +95,8 @@ export default function Main() {
 									<Home
 										weatherData={weatherData}
 										delay={delay}
-										updateWeatherData={updateWeatherData}
+										updateWeatherData={weatherData}
+										getCitySearch={getCitySearch}
 									/>
 								</>
 							}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import s from './Header.module.scss'
 import { getWeather } from '../../../Services/WeatherService'
 import { useCity } from '../../../Context/CityContext'
@@ -13,11 +13,25 @@ const getFormattedTime = () => {
 	}
 }
 
-export default function Header({ updateWeatherData, delay }) {
+export default function Header({ weatherData, delay, getCitySearch }) {
+	const inpRef = useRef()
+
+	const inpFocusHandler = () => {
+		inpRef.current.focus()
+	}
+
 	const { selectedCity } = useCity()
-	const [time, setTime] = useState(getFormattedTime())
+	useEffect(() => {
+		getCitySearch(selectedCity)
+	}, [selectedCity])
+	const [tip, setTip] = useState(false)
+
+	useEffect(() => {
+		console.log(tip)
+	}, [tip])
+
 	const [inpValue, setInpValue] = useState('')
-	const [weatherData, setWeatherData] = useState(null)
+
 	const [error, setError] = useState('')
 
 	const [show, setShow] = useState(false)
@@ -30,37 +44,11 @@ export default function Header({ updateWeatherData, delay }) {
 		return () => clearTimeout(timer)
 	}, [])
 
-	const fetchWeather = useCallback(async city => {
-		try {
-			const [weather, currentWeather] = await Promise.all([
-				getWeather(city),
-				getCurrentWeather(city),
-			])
-			if (weather && currentWeather) {
-				setWeatherData({ weather, currentWeather })
-				updateWeatherData({ weather, currentWeather })
-				sessionStorage.setItem(
-					'weather',
-					JSON.stringify({ weather, currentWeather })
-				)
-			}
-		} catch (e) {
-			setError('City was not found')
-			console.error('Failed to fetch weather:', e)
-		}
-	}, [])
-
-	useEffect(() => {
-		if (selectedCity) {
-			fetchWeather(selectedCity)
-		}
-	}, [selectedCity])
-
 	const SubmitHandler = e => {
 		e.preventDefault()
 
 		if (inpValue.trim()) {
-			fetchWeather(inpValue)
+			getCitySearch(inpValue)
 			setInpValue('')
 			setError(null)
 		}
@@ -68,23 +56,6 @@ export default function Header({ updateWeatherData, delay }) {
 			return
 		}
 	}
-
-	useEffect(() => {
-		try {
-			const storedWeather = JSON.parse(sessionStorage.getItem('weather'))
-
-			if (storedWeather?.currentWeather?.name) {
-				fetchWeather(storedWeather.currentWeather.name)
-			} else {
-				fetchWeather('Kiev')
-			}
-		} catch (e) {
-			console.log(e)
-		}
-
-		const interval = setInterval(() => setTime(getFormattedTime()), 60000)
-		return () => clearInterval(interval)
-	}, [fetchWeather])
 
 	if (!weatherData) {
 		return <Loading />
@@ -101,6 +72,7 @@ export default function Header({ updateWeatherData, delay }) {
 			<div className='search'>
 				<form className={s.searchForm} onSubmit={SubmitHandler}>
 					<input
+						ref={inpRef}
 						type='search'
 						className={s.searchInput}
 						placeholder='Search...'
@@ -127,7 +99,11 @@ export default function Header({ updateWeatherData, delay }) {
 			</div>
 			{error ? error : null}
 
-			<div className={s.notification}>
+			<div
+				className={s.notification}
+				onMouseEnter={() => setTip(true)}
+				onMouseLeave={() => setTip(false)}
+			>
 				<svg
 					width={50}
 					height={50}
@@ -144,6 +120,12 @@ export default function Header({ updateWeatherData, delay }) {
 						d='m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z'
 					/>
 				</svg>
+				<div
+					className={`${s.notification_block} ${tip ? s.show : ''}`}
+					onClick={inpFocusHandler}
+				>
+					<p>Type a city name, or pick one from the list</p>
+				</div>
 			</div>
 		</header>
 	)

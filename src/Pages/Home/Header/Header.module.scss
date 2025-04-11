@@ -1,5 +1,5 @@
 @import '../../../Styles/variables';
-
+@import './../../../Styles/mixins';
 .header {
 	width: 100%;
 	column-gap: 20px;
@@ -45,6 +45,10 @@
 	color: white;
 	border: none;
 
+	@media (max-width: 850px) {
+		min-width: 250px;
+	}
+
 	&::placeholder {
 		color: rgba($color: #fff, $alpha: 0.5);
 	}
@@ -83,6 +87,22 @@
 
 	svg:hover {
 		transition: all 0.3s;
+		stroke: orange;
+	}
+
+	&_block {
+		position: absolute;
+		height: 20px;
+		font-size: 16px;
+		opacity: 0;
+		visibility: hidden;
+		right: 0;
+		padding: 20px;
+		background-color: var(--card-background);
+		border-radius: 14px;
+		transition: all 0.3s;
+
+		@include flex-center;
 	}
 }
 
@@ -102,4 +122,9 @@
 	width: 40px;
 	height: 40px;
 	animation: spin 1s linear infinite;
+}
+
+.show {
+	opacity: 1;
+	visibility: visible;
 }

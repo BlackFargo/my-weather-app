@@ -5,10 +5,14 @@ import Info from './Info/Info'
 import DailyForecast from './Forecast/Daily Forecast/DailyForecast'
 import Cities from './Cities/Cities'
 
-export default function Home({ weatherData, delay, updateWeatherData }) {
+export default function Home({ weatherData, delay, getCitySearch }) {
 	return (
 		<>
-			<Header updateWeatherData={updateWeatherData} delay={delay} />
+			<Header
+				weatherData={weatherData}
+				delay={delay}
+				getCitySearch={getCitySearch}
+			/>
 			<Info
 				weatherData={weatherData ? weatherData.currentWeather : null}
 				icon={weatherData ? weatherData.currentWeather.weather[0].icon : null}
