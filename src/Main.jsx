@@ -1,41 +1,110 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Aside from './Components/Aside/Aside'
-import Header from './Components/Header/Header'
-import Info from './Components/Info/Info'
-import DailyForecast from './Components/Forecast/Daily Forecast/DailyForecast'
-import Cities from './Components/Cities/Cities'
-import HourlyForecast from './Components/Forecast/Hourly Forecast/HourlyForecast'
+import { getWeather, getCurrentWeather } from './Services/WeatherService'
 import { CityProvider } from './Context/CityContext'
+import WeatherMap from './Pages/Map/Map/WeatherMap'
+import Layout from './Layout/Layout'
+import Home from './Pages/Home/Home'
+import Map from './Pages/Map/Map'
+
+const delay = 200
+
+const getFormattedTime = () => {
+	const date = new Date()
+	return {
+		hours: date.getHours().toString().padStart(2, '0'),
+		minutes: date.getMinutes().toString().padStart(2, '0'),
+	}
+}
 
 export default function Main() {
+	const [time, setTime] = useState(getFormattedTime())
 	const [weatherData, setWeatherData] = useState(null)
+	const [searchCity, setSearchCity] = useState('')
 
-	const updateWeatherData = data => {
-		setWeatherData(data)
+	const getCitySearch = data => {
+		setSearchCity(data)
 	}
+
+	const fetchWeather = useCallback(async city => {
+		try {
+			const [weather, currentWeather] = await Promise.all([
+				getWeather(city),
+				getCurrentWeather(city),
+			])
+			if (weather && currentWeather) {
+				setWeatherData({ weather, currentWeather })
+
+				sessionStorage.setItem(
+					'weather',
+					JSON.stringify({ weather, currentWeather })
+				)
+			}
+		} catch (e) {
+			setError('City was not found')
+			console.error('Failed to fetch weather:', e)
+		}
+	}, [])
+
+	useEffect(() => {
+		try {
+			const storedWeather = JSON.parse(sessionStorage.getItem('weather'))
+
+			if (storedWeather?.currentWeather?.name) {
+				fetchWeather(storedWeather.currentWeather.name)
+			} else {
+				fetchWeather('Kiev')
+			}
+		} catch (e) {
+			console.log(e)
+		}
+
+		const interval = setInterval(() => setTime(getFormattedTime()), 60000)
+		return () => clearInterval(interval)
+	}, [fetchWeather])
+
+	useEffect(() => {
+		fetchWeather(searchCity)
+	}, [searchCity])
 
 	useEffect(() => {
 		console.log(weatherData)
 	}, [weatherData])
 
 	return (
-		<CityProvider>
-			<div className='wrapper container'>
-				<Aside
-					icon={weatherData ? weatherData.list[0].weather[0].icon : null}
-				/>
-
-				<main className='main'>
-					<Header updateWeatherData={updateWeatherData} />
-					<Info
-						weatherData={weatherData ? weatherData : null}
-						icon={weatherData ? weatherData.list[0].weather[0].icon : null}
-					/>
-					<HourlyForecast weatherData={weatherData} />
-					<DailyForecast weatherData={weatherData} />
-					<Cities weatherData={weatherData} />
-				</main>
-			</div>
-		</CityProvider>
+		<BrowserRouter>
+			<CityProvider>
+				<Routes>
+					<Route
+						path='/'
+						element={
+							<Layout
+								icon={
+									weatherData
+										? weatherData.weather.list[0].weather[0].icon
+										: null
+								}
+							/>
+						}
+					>
+						<Route
+							index
+							element={
+								<>
+									<Home
+										weatherData={weatherData}
+										delay={delay}
+										updateWeatherData={weatherData}
+										getCitySearch={getCitySearch}
+									/>
+								</>
+							}
+						/>
+						<Route path='weather-map' element={<Map />} />
+					</Route>
+				</Routes>
+			</CityProvider>
+		</BrowserRouter>
 	)
 }

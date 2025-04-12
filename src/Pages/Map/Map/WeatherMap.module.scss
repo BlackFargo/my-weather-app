@@ -1,0 +1,17 @@
+.weather_map {
+	grid-area: map;
+	transform: translateY(-200px);
+	opacity: 0;
+	transition: all 0.3s;
+}
+
+.weather_map.show {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.iframe_map {
+	border-radius: 10px;
+	width: 100%;
+	height: 100%;
+}

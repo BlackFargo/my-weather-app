@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 
-const CityContext = createContext()
+export const CityContext = createContext()
 
 export const CityProvider = ({ children }) => {
 	const [selectedCity, setSelectedCity] = useState('Kiev')

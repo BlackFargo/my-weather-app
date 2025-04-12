@@ -1,0 +1,37 @@
+.hourlyForecast {
+	height: 115px;
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	padding: 10px;
+	grid-area: hourly;
+	background-color: var(--components-background);
+	opacity: 0;
+	transform: translateX(200px);
+	transition: all 0.3s ease;
+}
+
+.hourlyForecast.show {
+	opacity: 1;
+	transform: translate(0);
+}
+
+.slider {
+	display: flex;
+	column-gap: 10px;
+	overflow-x: auto;
+	padding-bottom: 5px;
+	scrollbar-width: auto;
+	scrollbar-color: var(--components-background) var(--primary-color);
+
+	&::-webkit-scrollbar {
+		width: 200px !important;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--components-background);
+		border-radius: 4px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: var(--primary-color);
+	}
+}

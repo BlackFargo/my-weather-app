@@ -1,0 +1,13 @@
+html,
+body {
+	height: 100%;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	background-color: var(--background-color);
+	transition: background-color 0.3s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
