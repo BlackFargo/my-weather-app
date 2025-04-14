@@ -26,26 +26,16 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 	}, [selectedCity])
 	const [tip, setTip] = useState(false)
 
-<<<<<<< HEAD
-	useEffect(() => {
-		console.log(tip)
-	}, [tip])
-
-=======
->>>>>>> new-branch
 	const [inpValue, setInpValue] = useState('')
 
 	const [error, setError] = useState('')
 
 	const [show, setShow] = useState(false)
 
-<<<<<<< HEAD
-=======
 	const [cities, setCities] = useState([])
 
 	const [filteredCities, setFilteredCities] = useState([])
 
->>>>>>> new-branch
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setShow(true)
@@ -134,8 +124,6 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 					</button>
 				</form>
 			</div>
-<<<<<<< HEAD
-=======
 			<div className={s.cities}>
 				<ul className={s.cityList}>
 					{filteredCities.map(city => {
@@ -150,7 +138,6 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 					})}
 				</ul>
 			</div>
->>>>>>> new-branch
 			{error ? error : null}
 
 			<div
