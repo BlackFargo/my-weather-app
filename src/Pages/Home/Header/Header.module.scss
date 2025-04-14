@@ -1,6 +1,10 @@
 @import '../../../Styles/variables';
 @import './../../../Styles/mixins';
 .header {
+<<<<<<< HEAD
+=======
+	position: relative;
+>>>>>>> new-branch
 	width: 100%;
 	column-gap: 20px;
 	height: 100px;
@@ -127,4 +131,32 @@
 .show {
 	opacity: 1;
 	visibility: visible;
+}
+
+.cities {
+	position: absolute;
+	left: 50%;
+	top: 100%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
+
+.cityList {
+	display: flex;
+	flex-direction: column;
+
+	&_item {
+		border-radius: 4px;
+		font-size: 24px;
+		width: 300px;
+		padding: 10px;
+		background-color: var(--card-background);
+		border: 1px solid var(--components-background);
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&:hover {
+			background-color: gold;
+		}
+	}
 }

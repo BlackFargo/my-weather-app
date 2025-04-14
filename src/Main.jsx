@@ -19,6 +19,7 @@ const getFormattedTime = () => {
 }
 
 export default function Main() {
+	const [error, setError] = useState('')
 	const [time, setTime] = useState(getFormattedTime())
 	const [weatherData, setWeatherData] = useState(null)
 	const [searchCity, setSearchCity] = useState('')
