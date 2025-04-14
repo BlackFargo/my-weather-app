@@ -26,15 +26,15 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 	}, [selectedCity])
 	const [tip, setTip] = useState(false)
 
-	useEffect(() => {
-		console.log(tip)
-	}, [tip])
-
 	const [inpValue, setInpValue] = useState('')
 
 	const [error, setError] = useState('')
 
 	const [show, setShow] = useState(false)
+
+	const [cities, setCities] = useState([])
+
+	const [filteredCities, setFilteredCities] = useState([])
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -56,6 +56,33 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 			return
 		}
 	}
+
+	useEffect(() => {
+		if (!inpValue) {
+			setFilteredCities([])
+			return
+		}
+		const filtred = cities
+			.filter(city =>
+				city.toLocaleLowerCase().includes(inpValue.toLocaleLowerCase())
+			)
+			.slice(0, 4)
+
+		setFilteredCities(filtred)
+	}, [inpValue])
+
+	useEffect(() => {
+		fetch('./Cities.json')
+			.then(data => data.json())
+			.then(data => {
+				console.log(
+					data.forEach(city => {
+						setCities(prev => [...prev, city.name])
+					})
+				)
+			})
+			.catch(e => console.error(`Error: ${e}`))
+	}, [])
 
 	if (!weatherData) {
 		return <Loading />
@@ -96,6 +123,20 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 						</svg>
 					</button>
 				</form>
+			</div>
+			<div className={s.cities}>
+				<ul className={s.cityList}>
+					{filteredCities.map(city => {
+						return (
+							<li
+								className={s.cityList_item}
+								onClick={() => getCitySearch(city)}
+							>
+								{city}
+							</li>
+						)
+					})}
+				</ul>
 			</div>
 			{error ? error : null}
 
