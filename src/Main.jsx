@@ -66,7 +66,9 @@ export default function Main() {
 	}, [fetchWeather])
 
 	useEffect(() => {
-		fetchWeather(searchCity)
+		if (searchCity.trim()) {
+			fetchWeather(searchCity)
+		}
 	}, [searchCity])
 
 	useEffect(() => {
