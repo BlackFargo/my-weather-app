@@ -44,6 +44,11 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 		return () => clearTimeout(timer)
 	}, [])
 
+	const setFiltredCity = city => {
+		getCitySearch(city)
+		setFilteredCities([])
+	}
+
 	const SubmitHandler = e => {
 		e.preventDefault()
 
@@ -66,7 +71,7 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 			.filter(city =>
 				city.toLocaleLowerCase().includes(inpValue.toLocaleLowerCase())
 			)
-			.slice(0, 4)
+			.slice(0, 5)
 
 		setFilteredCities(filtred)
 	}, [inpValue])
@@ -130,7 +135,7 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 						return (
 							<li
 								className={s.cityList_item}
-								onClick={() => getCitySearch(city)}
+								onClick={() => setFiltredCity(city)}
 							>
 								{city}
 							</li>
