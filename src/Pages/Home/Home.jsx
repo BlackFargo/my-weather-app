@@ -6,6 +6,7 @@ import DailyForecast from './Forecast/Daily Forecast/DailyForecast'
 import Cities from './Cities/Cities'
 
 export default function Home({ weatherData, delay, getCitySearch }) {
+	const icon = weatherData?.weather?.list?.[0]?.weather?.[0]?.icon || null
 	return (
 		<>
 			<Header
@@ -15,7 +16,7 @@ export default function Home({ weatherData, delay, getCitySearch }) {
 			/>
 			<Info
 				weatherData={weatherData ? weatherData.currentWeather : null}
-				icon={weatherData ? weatherData.currentWeather.weather[0].icon : null}
+				icon={icon}
 				delay={delay}
 			/>
 			<HourlyForecast

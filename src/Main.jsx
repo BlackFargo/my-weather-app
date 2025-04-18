@@ -7,16 +7,9 @@ import WeatherMap from './Pages/Map/Map/WeatherMap'
 import Layout from './Layout/Layout'
 import Home from './Pages/Home/Home'
 import Map from './Pages/Map/Map'
+import { getFormattedTime } from './helpers/getFormattedTime'
 
 const delay = 200
-
-const getFormattedTime = () => {
-	const date = new Date()
-	return {
-		hours: date.getHours().toString().padStart(2, '0'),
-		minutes: date.getMinutes().toString().padStart(2, '0'),
-	}
-}
 
 export default function Main() {
 	const [error, setError] = useState('')
@@ -71,26 +64,13 @@ export default function Main() {
 		}
 	}, [searchCity])
 
-	useEffect(() => {
-		console.log(weatherData)
-	}, [weatherData])
+	const icon = weatherData?.weather?.list?.[0]?.weather?.[0]?.icon || null
 
 	return (
 		<BrowserRouter>
 			<CityProvider>
 				<Routes>
-					<Route
-						path='/'
-						element={
-							<Layout
-								icon={
-									weatherData
-										? weatherData.weather.list[0].weather[0].icon
-										: null
-								}
-							/>
-						}
-					>
+					<Route path='/' element={<Layout icon={icon} />}>
 						<Route
 							index
 							element={

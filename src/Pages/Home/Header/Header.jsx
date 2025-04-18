@@ -5,14 +5,6 @@ import { useCity } from '../../../Context/CityContext'
 import { getCurrentWeather } from '../../../Services/WeatherService'
 import Loading from '../../../Components/Loading/Loading'
 
-const getFormattedTime = () => {
-	const date = new Date()
-	return {
-		hours: date.getHours().toString().padStart(2, '0'),
-		minutes: date.getMinutes().toString().padStart(2, '0'),
-	}
-}
-
 export default function Header({ weatherData, delay, getCitySearch }) {
 	const inpRef = useRef()
 
