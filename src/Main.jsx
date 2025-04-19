@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Aside from './Components/Aside/Aside'
-import { getWeather, getCurrentWeather } from './Services/WeatherService'
+import {
+	getWeather,
+	getCurrentWeather,
+} from './Services/Weather/WeatherService'
 import { CityProvider } from './Context/CityContext'
 import WeatherMap from './Pages/Map/Map/WeatherMap'
 import Layout from './Layout/Layout'
@@ -67,7 +70,7 @@ export default function Main() {
 	const icon = weatherData?.weather?.list?.[0]?.weather?.[0]?.icon || null
 
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename=''>
 			<CityProvider>
 				<Routes>
 					<Route path='/' element={<Layout icon={icon} />}>

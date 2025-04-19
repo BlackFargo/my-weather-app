@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import s from './Aside.module.scss'
 import Loading from '../Loading/Loading'
 
@@ -92,7 +92,7 @@ export default function Aside({ icon }) {
 			</div>
 			<div className={s.footer}>
 				<input
-					checked={theme}
+					defaultChecked={theme}
 					type='checkbox'
 					className={s.theme_switcher}
 					id='switcher'

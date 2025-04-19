@@ -14,7 +14,8 @@ export default function DailyForecast({ weatherData }) {
 		return () => clearTimeout(timer)
 	})
 
-	const dailyForecast = weatherData.list.filter((_, index) => index % 8 === 0)
+	const dailyForecast =
+		weatherData.list.filter((_, index) => index % 8 === 0) || null
 
 	return (
 		<div className={`${s.globals} ${show ? s.show : ''}`}>

@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import s from './Header.module.scss'
-import { getWeather } from '../../../Services/WeatherService'
-import { useCity } from '../../../Context/CityContext'
-import { getCurrentWeather } from '../../../Services/WeatherService'
+
+import { useCity } from '../../../Hooks/UseCity'
+
 import Loading from '../../../Components/Loading/Loading'
 
 export default function Header({ weatherData, delay, getCitySearch }) {

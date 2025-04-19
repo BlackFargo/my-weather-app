@@ -1,0 +1,26 @@
+.main {
+	display: grid;
+	grid-template-areas:
+		'header header'
+		'info cities'
+		'hourly hourly'
+		'daily daily';
+	max-width: 900px;
+
+	grid-template-columns: 1fr 1fr;
+	column-gap: 15px;
+	row-gap: 20px;
+	margin-left: 40px;
+}
+
+@media (max-width: 900px) {
+	.main {
+		margin-left: 0;
+	}
+}
+
+.main.map-page {
+	grid-template-areas: 'map map';
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+}

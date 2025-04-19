@@ -9,7 +9,7 @@ export async function getWeather(city = 'Kiev') {
 			`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${APIKEY}`
 		)
 		const data = response.data
-		console.log(data)
+
 		return data
 	} catch (e) {
 		console.log(`Error: ${e}`)
@@ -23,7 +23,7 @@ export async function getCurrentWeather(city = 'Kiev') {
 			`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKEY}`
 		)
 		const data = response.data
-		console.log(data)
+
 		return data
 	} catch (e) {
 		console.log(`Error: ${e}`)

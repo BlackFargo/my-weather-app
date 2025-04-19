@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import s from './Cities.module.scss'
 import CityCard from '../../../Components/Cards/CityCard/CityCard'
-import { getCurrentWeather } from '../../../Services/WeatherService'
-import { useCity } from '../../../Context/CityContext'
+import { getCurrentWeather } from '../../../Services/Weather/WeatherService'
+import { useCity } from '../../../Hooks/UseCity'
 import Loading from '../../../Components/Loading/Loading'
 
 const capitals = [

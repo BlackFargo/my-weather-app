@@ -11,5 +11,3 @@ export const CityProvider = ({ children }) => {
 		</CityContext.Provider>
 	)
 }
-
-export const useCity = () => useContext(CityContext)
