@@ -69,17 +69,14 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 	}, [inpValue])
 
 	useEffect(() => {
-		fetch('./Cities.json')
-			.then(data => data.json())
+		fetch('/Cities.json')
+			.then(res => res.json())
 			.then(data => {
-				console.log(
-					data.forEach(city => {
-						setCities(prev => [...prev, city.name])
-					})
-				)
+				const names = data.map(city => city.name)
+				setCities(names)
 			})
 			.catch(e => console.error(`Error: ${e}`))
-	}, [])
+	}, [show])
 
 	if (!weatherData) {
 		return <Loading />
