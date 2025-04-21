@@ -69,14 +69,17 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 	}, [inpValue])
 
 	useEffect(() => {
-		fetch('/Cities.json')
-			.then(res => res.json())
+		fetch(`${import.meta.env.BASE_URL}Cities.json`)
+			.then(res => {
+				if (!res.ok) throw new Error('Файл не найден')
+				return res.json()
+			})
 			.then(data => {
 				const names = data.map(city => city.name)
 				setCities(names)
 			})
-			.catch(e => console.error(`Error: ${e}`))
-	}, [show])
+			.catch(e => console.error(`Ошибка при загрузке Cities.json: ${e}`))
+	}, [])
 
 	if (!weatherData) {
 		return <Loading />
@@ -123,6 +126,7 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 					{filteredCities.map(city => {
 						return (
 							<li
+								key={city} // Добавляем уникальный ключ
 								className={s.cityList_item}
 								onClick={() => setFiltredCity(city)}
 							>
