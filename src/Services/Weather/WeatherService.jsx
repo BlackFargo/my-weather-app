@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-const APIKEY = '957874ee6bf76fa3c2b7cc881a13a2fb'
+const APIKEY = import.meta.env.VITE_API_KEY
 
 export async function getWeather(city = 'Kiev') {
 	try {
