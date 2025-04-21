@@ -70,7 +70,7 @@ export default function Main() {
 	const icon = weatherData?.weather?.list?.[0]?.weather?.[0]?.icon || null
 
 	return (
-		<BrowserRouter basename=''>
+		<BrowserRouter basename='/my-weather-app'>
 			<CityProvider>
 				<Routes>
 					<Route path='/' element={<Layout icon={icon} />}>

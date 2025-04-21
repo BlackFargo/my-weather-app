@@ -12,6 +12,25 @@
 	transition: all 0.3s ease;
 	opacity: 0;
 	transform: translateY(200px);
+
+	@media (max-width: 700px) {
+		overflow: auto;
+
+		scrollbar-width: auto;
+		scrollbar-color: var(--components-background) var(--primary-color);
+
+		&::-webkit-scrollbar {
+			width: 200px !important;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--components-background);
+			border-radius: 4px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: var(--primary-color);
+		}
+	}
 }
 
 .globals.show {

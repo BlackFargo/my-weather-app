@@ -20,6 +20,14 @@
 	transform: translateY(-200px);
 	transition: all 0.3s ease;
 	z-index: 1;
+
+	@media (max-width: 700px) {
+		flex-wrap: wrap;
+		row-gap: 20px;
+		justify-content: center;
+		align-items: center;
+		height: 150px;
+	}
 }
 
 .header.show {

@@ -4,6 +4,7 @@
 	opacity: 0;
 	transition: all 0.3s ease;
 	max-width: 900px;
+	min-height: 600px;
 	width: 100%;
 }
 
@@ -18,16 +19,3 @@
 	width: 90vw;
 	height: 100%;
 }
-
-// @media (max-width: 900px) {
-// 	.weather_map {
-// 		max-width: 100%;
-// 		transform: translateY(0);
-// 		opacity: 1;
-// 	}
-
-// 	.iframe_map {
-// 		width: 100%;
-// 		height: 400px;
-// 	}
-// }
