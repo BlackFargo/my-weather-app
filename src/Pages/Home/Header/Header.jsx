@@ -81,6 +81,10 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 			.catch(e => console.error(`Ошибка при загрузке Cities.json: ${e}`))
 	}, [])
 
+	useEffect(() => {
+		console.log(filteredCities)
+	}, [filteredCities])
+
 	if (!weatherData) {
 		return <Loading />
 	}
@@ -121,12 +125,12 @@ export default function Header({ weatherData, delay, getCitySearch }) {
 					</button>
 				</form>
 			</div>
-			<div className={s.cities}>
+			<div className={`${s.cities} ${filteredCities.length ? s.show : ''}`}>
 				<ul className={s.cityList}>
 					{filteredCities.map(city => {
 						return (
 							<li
-								key={city} // Добавляем уникальный ключ
+								key={city}
 								className={s.cityList_item}
 								onClick={() => setFiltredCity(city)}
 							>
