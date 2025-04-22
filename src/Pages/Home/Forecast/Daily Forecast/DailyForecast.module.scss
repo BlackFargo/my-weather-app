@@ -15,7 +15,7 @@
 
 	@media (max-width: 700px) {
 		overflow: auto;
-
+		height: 250px;
 		scrollbar-width: auto;
 		scrollbar-color: var(--components-background) var(--primary-color);
 
