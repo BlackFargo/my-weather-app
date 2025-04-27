@@ -8,7 +8,7 @@ A modern weather app with a beautiful interface, dark/light theme, and real-time
 
 ## 🚀 Demo
 
-[Open the site](https://blackfargo.github.io/my-weather-app/)
+[Open the website](https://blackfargo.github.io/my-weather-app/)
 
 ## ⚙️ Technologies Used
 
